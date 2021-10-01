@@ -1,4 +1,4 @@
-public class Program1 {
+public class Program3 {
     public static void main(String[] args) {
         int count1 = 0, count2 = 0, iterator = 1;
         for (int i = 0; i < 11; i++) {
