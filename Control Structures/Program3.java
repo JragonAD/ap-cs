@@ -10,7 +10,7 @@ public class Program3 {
 
 
         for (int n = 50; n > 0; n = n / 2) {
-            System.out.println(n);
+            System.out.println(n); // 6
         }
     }
 }
