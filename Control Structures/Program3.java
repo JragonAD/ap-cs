@@ -8,7 +8,6 @@ public class Program3 {
         }
         System.out.println(count1 - count2);
 
-
         for (int n = 50; n > 0; n = n / 2) {
             System.out.println(n); // 6
         }
