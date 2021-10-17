@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
-/* A  two dimensional array (that has 6 rows and 7 columns) as a a class variable 
+/* 
+A  two dimensional array (that has 6 rows and 7 columns) as a a class variable 
 Two person game
 User friendly game
 Visually appealing?  
@@ -24,69 +25,54 @@ class Program9v2 {
     }
 
     public static void gameLoop() {
-        while (checkHelper()) {
+        while (!(horizontalCheck() || verticalCheck() || diagonalCheck() | diagonalCheck())) {
             displayBoard();
             dropPiece();
             swapPlayer();
         }
         displayBoard();
         swapPlayer();
-        System.out.println("\nPlayer " + Integer.toString(player) + " wins!");
+        System.out.println("\nPlayer " + (player == 1 ? "X" : "O") + " wins!");
     }
 
     public static void swapPlayer() {
         player = player == 1 ? 2 : 1;
     }
 
-    public static boolean checkHelper() {
-        boolean checkWin = horizontalCheck() || verticalCheck() || diagonalCheck();
-        if (!checkWin) {
-            flipBoard();
-            checkWin = diagonalCheck();
-            flipBoard();
-        }
-        return !checkWin;
-    }
-
     public static boolean diagonalCheck() {
-        int previous, counter = 0;
-        for (int i = 0; i < 3; i++) {
+        int previous, counter = 1;
+        flipBoard();
+
+        for (int startRow = 0; startRow < 3; startRow++) {
             previous = 0;
-            for (int j = i; j < 6; j++) {
-                if (previous == map[i + (j - i)][j] && previous != 0) {
-                    counter += 1;
+            for (int curRow = startRow; curRow < map.length; curRow++) {
+                if (previous == map[curRow][curRow - startRow] && previous != 0) {
+                    counter++;
                     if (counter == 4) {
                         return true;
                     }
                 } else {
                     counter = 1;
                 }
-                previous = map[i + (j - i)][j];
+                previous = map[curRow][curRow - startRow];
             }
         }
-        for (int i = 5; i > 2; i--) {
+        for (int startCol = 1; startCol < 4; startCol++) {
             previous = 0;
-            for (int j = i + 1; j > 0; j--) {
-                if (previous == map[i - (i - (j - 1))][j] && previous != 0) {
-                    counter += 1;
+            for (int curCol = startCol; curCol < map[0].length; curCol++) {
+                if (previous == map[curCol - 1][curCol] && previous != 0) {
+                    counter++;
                     if (counter == 4) {
                         return true;
                     }
                 } else {
                     counter = 1;
                 }
-                previous = map[i - (i - (j - 1))][j];
+                previous = map[curCol - 1][curCol];
             }
         }
         return false;
     }
-
-    /*
-     * 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 1 2 0 0 0 0 0 2 2 2 0 0 0 0 1 1 1 0
-     * 0 1 1
-     * 
-     * Player 1 wins! Would you like to play another game? (y/n):
-     */
 
     public static boolean horizontalCheck() {
         int previous, counter = 1;
@@ -94,7 +80,7 @@ class Program9v2 {
             previous = 0;
             for (int j = 0; j < map[i].length; j++) {
                 if (previous == map[i][j] && previous != 0) {
-                    counter += 1;
+                    counter++;
                     if (counter == 4) {
                         return true;
                     }
@@ -113,7 +99,7 @@ class Program9v2 {
             previous = 0;
             for (int j = 0; j < map.length; j++) {
                 if (previous == map[j][i] && previous != 0) {
-                    counter += 1;
+                    counter++;
                     if (counter == 4) {
                         return true;
                     }
@@ -126,22 +112,12 @@ class Program9v2 {
         return false;
     }
 
-    /*
-     * public static boolean linearCheck() { int previousx, previousy, counterx,
-     * countery; for (int i = 0; i < map.length; i++) { previousx = counterx = 0;
-     * for (int j = 0; j < map[i].length; j++) { if (map[i][j] == previousx) {
-     * counterx++; if (counterx == 4) { return true; } } } }
-     * 
-     * 
-     * 
-     * return false; }
-     */
-
     public static int getInput() {
         System.out.print(
-                "Player " + Integer.toString(player) + ", enter the column you would like to drop your piece in: ");
+                "Player " + (player == 1 ? "X" : "O") + ", enter the column you would like to drop your piece in: ");
         int column = sc.nextInt();
         if (column < 0 || column > map[0].length) {
+            System.out.println("\nEnter a number between 1 and 7.");
             return getInput();
         }
         return column - 1;
@@ -155,16 +131,22 @@ class Program9v2 {
                 return;
             }
         }
+        System.out.println("\nThis column is full. Choose another column.");
         dropPiece();
     }
 
     public static void displayBoard() {
-        for (int row[] : map) {
-            for (int cell : row) {
-                System.out.print(cell + " ");
+        String printI1[] = new String[6];
+        for (int i = 0; i < map.length; i++) {
+            printI1[i] = "│ ";
+            for (int cell : map[i]) {
+                printI1[i] += cell + " │ ";
             }
-            System.out.println();
         }
+        System.out.println("\n\t  Connect 4\n  1   2   3   4   5   6   7\n┌───┬───┬───┬───┬───┬───┬───┐\n"
+                + String.join("\n├───┼───┼───┼───┼───┼───┼───┤\n", printI1).replace("0", " ").replace("1", "X")
+                        .replace("2", "O")
+                + "\n└───┴───┴───┴───┴───┴───┴───┘");
     }
 
     public static void flipBoard() {
@@ -186,7 +168,7 @@ class Program9v2 {
     }
 
     public static boolean keepPlaying() {
-        System.out.println("Would you like to play another game? (y/n): ");
+        System.out.print("\nWould you like to play another game? (y/n): ");
         return sc.next().charAt(0) == 'y' ? true : false;
     }
 }
