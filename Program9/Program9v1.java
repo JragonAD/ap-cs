@@ -10,7 +10,8 @@ Must have a minimum of three methods (other than the main method)
 DIAGONAL CHECK 
 Can your user chose to play again
 */
-class Main {
+
+class Program9v1 {
     static int map[][] = new int[6][7], player;
     static Scanner sc = new Scanner(System.in);
 
@@ -58,7 +59,7 @@ class Main {
                         return true;
                     }
                 }
-                previous =  map[i + (j - i)][j];
+                previous = map[i + (j - i)][j];
             }
         }
         previous = 0;
@@ -77,17 +78,12 @@ class Main {
         return false;
     }
 
-/* 
-0 0 0 0 0 0 0 
-0 0 0 0 0 0 0
-2 0 0 0 0 0 0
-1 2 0 0 0 0 0
-2 2 2 0 0 0 0
-1 1 1 0 0 1 1
-
-Player 1 wins!
-Would you like to play another game? (y/n):
-*/
+    /*
+     * 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 1 2 0 0 0 0 0 2 2 2 0 0 0 0 1 1 1 0
+     * 0 1 1
+     * 
+     * Player 1 wins! Would you like to play another game? (y/n):
+     */
 
     public static boolean horizontalCheck() {
         int previous = 0, counter;
