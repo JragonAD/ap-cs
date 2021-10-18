@@ -13,10 +13,16 @@ Can your user chose to play again
 */
 
 class Program9v2 {
-    static int map[][] = new int[6][7], player;
+    static int map[][] = new int[6][7], player, column;
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+        System.out.println("Welcome to Connect 4!");
+        System.out.println("\nIn this 2 player game, you will compete with a friend to");
+        System.out.println("see who can connect four of your game pieces in a row vertically,");
+        System.out.println("horizontally, or diagonally. When prompted, drop your game piece");
+        System.out.println("in the column of your choice.");
+        System.out.println("\nGood luck, and have fun!");
         do {
             player = 1;
             resetBoard();
@@ -25,7 +31,7 @@ class Program9v2 {
     }
 
     public static void gameLoop() {
-        while (!(horizontalCheck() || verticalCheck() || diagonalCheck() | diagonalCheck())) {
+        while (!(horizontalCheck() || newVerticalCheck() || diagonalCheck() | diagonalCheck())) {
             displayBoard();
             dropPiece();
             swapPlayer();
@@ -93,7 +99,23 @@ class Program9v2 {
         return false;
     }
 
-    public static boolean verticalCheck() {
+    public static boolean newVerticalCheck() {
+        int previous = 0, counter = 1;
+        for (int i = 0; i < map.length; i++) {
+            if (previous == map[i][column] && previous != 0) {
+                counter++;
+                if (counter == 4) {
+                    return true;
+                }
+            } else {
+                counter = 1;
+            }
+            previous = map[i][column];
+        }
+        return false;
+    }
+
+    public static boolean deprecatedVerticalCheck() {
         int previous, counter = 1;
         for (int i = 0; i < map[0].length; i++) {
             previous = 0;
@@ -124,7 +146,7 @@ class Program9v2 {
     }
 
     public static void dropPiece() {
-        int column = getInput();
+        column = getInput();
         for (int i = map.length - 1; i >= 0; i--) {
             if (map[i][column] == 0) {
                 map[i][column] = player;
