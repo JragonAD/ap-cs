@@ -5,33 +5,44 @@ public class Driver {
 
     public static void main(String[] args) {
 
-        String name, author;
+        String name, author, bookName;
         boolean isCheckedIn;
         System.out.println("Welcome to the Shaker High Library System. Enter books (-1 to exit).");
 
         Library shakerLibrary = new Library();
         do {
-            System.out.println("Enter book name: ");
+            System.out.print("Enter book name: ");
             name = sc.nextLine();
-            System.out.println("Enter author name: ");
+            System.out.print("Enter author name: ");
             author = sc.nextLine();
-            System.out.println("Is the book checked in? (y/n): ");
+            System.out.print("Is the book checked in? (y/n): ");
             shakerLibrary.add(new Book(name, author, getYN()));
         } while (keepGoing());
 
-        System.out.println("There are " + shakerLibrary.getNumBooks() + " books in the library.");
-        System.out.println("Checking out the first book in the library: " + shakerLibrary.checkoutBook(0));
-        System.out.println("Enter a book name to check if it is checked in: ");
-        isCheckedIn = shakerLibrary.isCheckedIn(sc.nextLine());
-        System.out.println("That book is " + (isCheckedIn ? "" : " not ") + " checked in");
+        System.out.println("\nLibrary: " + shakerLibrary);
+
+        do {
+            System.out.println("\nThere are " + shakerLibrary.getNumBooks() + " book(s) checked in in the library.");
+
+            System.out.print("\nEnter a book name to check if it is checked in: ");
+            bookName = sc.nextLine();
+            isCheckedIn = shakerLibrary.isCheckIn(bookName);
+            System.out.println("That book is " + (isCheckedIn ? "" : "not ") + "checked in.");
+            if (isCheckedIn) {
+                System.out.print("Would you like to check out the book? (y/n): ");
+                if (getYN()) {
+                    System.out.println("\nChecking out: " + shakerLibrary.checkoutBook(bookName));
+                }
+            }
+        } while (keepGoing());
     }
 
     public static boolean keepGoing() {
-        System.out.println("Do you have another book? (y/n): ");
+        System.out.print("Do you have another book? (y/n): ");
         return getYN();
     }
 
     public static boolean getYN() {
-        return sc.nextLine().toLowerCase().substring(0, 1) == "y";
+        return sc.nextLine().toLowerCase().substring(0, 1).equals("y");
     }
 }
