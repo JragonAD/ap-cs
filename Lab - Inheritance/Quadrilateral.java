@@ -32,7 +32,8 @@ public class Quadrilateral {
     }
 
     protected boolean hasRight() {
-        return isPerp(slopes[0], slopes[1]) || isPerp(slopes[1], slopes[2]) || isPerp(slopes[2], slopes[3]) || isPerp(slopes[3], slopes[0]);
+        return isPerp(slopes[0], slopes[1]) || isPerp(slopes[1], slopes[2]) || isPerp(slopes[2], slopes[3])
+                || isPerp(slopes[3], slopes[0]);
     }
 
     protected void isShape(boolean value, String name) {
