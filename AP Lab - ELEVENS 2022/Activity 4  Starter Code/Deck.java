@@ -65,13 +65,12 @@ public class Deck {
 	public void shuffle() {
 		int r;
 		Card temp;
-		for (int k = cards.size() - 1; k > 0; k--) {
-			r = (int) (Math.random() * cards.size());
+		for (int k = size - 1; k > 0; k--) {
+			r = (int) (Math.random() * size);
 			temp = cards.get(k);
 			cards.set(k, cards.get(r));
 			cards.set(r, temp);
 		}
-		size = cards.size();
 	}
 
 	/**
