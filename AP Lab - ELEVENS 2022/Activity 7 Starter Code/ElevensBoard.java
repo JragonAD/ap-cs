@@ -210,6 +210,20 @@ public class ElevensBoard {
 	}
 
 	/**
+	 * My answer to d) on activity 7
+	 * 
+	 * @param board
+	 */
+	public static printCards(ElevensBoard board) {
+		List<Integer> cIndexes = board.cardIndexes();
+		
+		for (Integer c : cIndexes) {
+			System.out.println(board.cardAt(c.intValue()));
+		}
+
+	}
+
+	/**
 	 * Check for an 11-pair in the selected cards.
 	 * @param selectedCards selects a subset of this board.  It is list
 	 *                      of indexes into this board that are searched
