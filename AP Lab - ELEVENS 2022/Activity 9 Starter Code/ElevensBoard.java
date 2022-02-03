@@ -1,4 +1,5 @@
 import java.util.List;
+
 import java.util.ArrayList;
 
 /**
@@ -68,6 +69,9 @@ public class ElevensBoard extends Board {
 	@Override
 	public boolean anotherPlayIsPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		List<Integer> selectedCards = cardIndexes();
+		return containsPairSum11(selectedCards) || containsJQK(selectedCards);
+
 	}
 
 	/**
@@ -83,7 +87,7 @@ public class ElevensBoard extends Board {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
 		for (int i = 0; i < selectedCards.size() - 1; i++) {
 			for (int j = i + 1; j < selectedCards.size(); j++) {
-				if (board.cardAt(i).pointValue() + board.cardAt(j).pointValue() == 11) {
+				if (cardAt(selectedCards.get(i)).pointValue() + cardAt(selectedCards.get(j)).pointValue() == 11) {
 					return true;
 				}
 			}
@@ -102,11 +106,12 @@ public class ElevensBoard extends Board {
 	 */
 	private boolean containsJQK(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-		int count = 0;
-		String suit;
+		boolean jack = false, queen = false, king = false;
 		for (Integer i : selectedCards) {
-			count += (suit = board.cardAt(i).suit()) == "jack" ? 1 : suit == "queen" ? 2 : suit == "king" ? 3 : 0;
+			jack = jack || cardAt(i.intValue()).suit().equals("jack");
+			queen = queen || cardAt(i.intValue()).suit().equals("queen");
+			king = king || cardAt(i.intValue()).suit().equals("king");
 		}
-		return count == 6;
+		return jack && queen && king;
 	}
 }
