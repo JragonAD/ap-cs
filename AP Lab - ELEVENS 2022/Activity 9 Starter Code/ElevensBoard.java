@@ -108,9 +108,9 @@ public class ElevensBoard extends Board {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
 		boolean jack = false, queen = false, king = false;
 		for (Integer i : selectedCards) {
-			jack = jack || cardAt(i.intValue()).suit().equals("jack");
-			queen = queen || cardAt(i.intValue()).suit().equals("queen");
-			king = king || cardAt(i.intValue()).suit().equals("king");
+			jack = jack || cardAt(i.intValue()).rank().equals("jack");
+			queen = queen || cardAt(i.intValue()).rank().equals("queen");
+			king = king || cardAt(i.intValue()).rank().equals("king");
 		}
 		return jack && queen && king;
 	}
